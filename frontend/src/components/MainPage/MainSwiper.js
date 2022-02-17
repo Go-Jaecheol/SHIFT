@@ -16,7 +16,8 @@ import NC from '../../images/NC.svg';
 import SSG from '../../images/SSG.svg';
 
 const SwiperWrapper = styled.div`
-    background-color: rgba(246, 246, 246, 0.5);
+    background-color: #FFFFFF;
+    border-radius: 15px;
     width: 1100px;
 `;
 
@@ -32,72 +33,85 @@ const SlideItem = styled.div`
     ${({ active }) => active && `box-shadow: 1px 1px 6px black;`};
 `;
 
-SwiperCore.use([Navigation]);
 
 const MainSwiper = () => {
+
+    const data = [
+        {
+            id: 1,
+            teamname: "SL",
+            img_src: SL,
+        },
+        {
+            id: 2,
+            teamname: "KT",
+            img_src: KT,
+        },
+        {
+            id: 3,
+            teamname: "LG",
+            img_src: LG,
+        },
+        {
+            id: 4,
+            teamname: "DOO",
+            img_src: DOO,
+        },
+        {
+            id: 5,
+            teamname: "KIA",
+            img_src: KIA,
+        },
+        {
+            id: 6,
+            teamname: "KIW",
+            img_src: KIW,
+        },
+        {
+            id: 7,
+            teamname: "LOT",
+            img_src: LOT,
+        },
+        {
+            id: 8,
+            teamname: "NC",
+            img_src: NC,
+        },
+        {
+            id: 9,
+            teamname: "SSG",
+            img_src: SSG,
+        },
+        {
+            id: 10,
+            teamname: "HW",
+            img_src: HW,
+        },
+
+    ]
+
     SwiperCore.use([Navigation]);
 
     return (
         <SwiperWrapper>
             <h2>원하는 팀을 선택해주세요!</h2>
-          <Swiper
-            slidesPerView={5}
-            spaceBetween={20}
-            initialSlide={1}
-            centeredSlides={true}
-            navigation={true}
-          >
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={SL} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={KT} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={LG} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={DOO} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={KIA} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={KIW} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={LOT} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={NC} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={SSG} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-            <SwiperSlide>
-                <SlideItem>
-                    <img src={HW} height="200" width="200"/>
-                </SlideItem>
-            </SwiperSlide>
-          </Swiper>
+            <Swiper
+                slidesPerView={5}
+                spaceBetween={10}
+                initialSlide={0}
+                navigation={true}
+                watchOverflow={true}
+                mousewheel={true}
+            >
+                {data.map((dt) => (
+                    <SwiperSlide>
+                        <SlideItem key={dt.id}>
+                            <img src={dt.img_src} height="200" width="200"/>
+                        </SlideItem>
+                    </SwiperSlide>
+                ))}
+            
+            </Swiper>
         </SwiperWrapper>
     )
 }

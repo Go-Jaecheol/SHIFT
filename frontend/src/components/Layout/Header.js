@@ -5,7 +5,6 @@ import logo from '../../images/SHIFT_logo.png';
 
 const HeaderWrapper = styled.div`
     display: flex;
-    background-color: #8bc0aa;
     height: 100px;
     flex-direction: row;
     justify-content: center;
