@@ -1,8 +1,10 @@
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import SwiperCore, { Navigation } from 'swiper';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import SL from '../../images/SL.svg';
 import KT from '../../images/KT.svg';
@@ -35,6 +37,14 @@ const SlideItem = styled.div`
 
 
 const MainSwiper = () => {
+    const navigate = useNavigate();
+
+    const handleClick = (name) => {
+        navigate({
+            pathname:
+                "/list/" + name
+        });
+    };
 
     const data = [
         {
@@ -106,7 +116,7 @@ const MainSwiper = () => {
                 {data.map((dt) => (
                     <SwiperSlide>
                         <SlideItem key={dt.id}>
-                            <img src={dt.img_src} height="200" width="200"/>
+                            <img src={dt.img_src} onClick={()=>handleClick(dt.teamname)} height="200" width="200"/>
                         </SlideItem>
                     </SwiperSlide>
                 ))}
