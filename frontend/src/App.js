@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Header from "./components/Layout/Header";
 import Footer from "./components/Layout/Footer";
@@ -11,16 +11,18 @@ function App() {
     <div className="App">
         <Header/>
         <BrowserRouter>
-          <Routes>
+          <Switch>
             <Route
+              exact
               path="/"
-              element={<MainPage/>}
+              component={MainPage}
             />
             <Route
+              exact
               path="/list/:team"
-              element={(props) => <TeamPage {...props} />}
+              component={(props) => <TeamPage {...props} />}
             />
-          </Routes>
+          </Switch>
         </BrowserRouter>
     </div>
   );

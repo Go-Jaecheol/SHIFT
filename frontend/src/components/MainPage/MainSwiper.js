@@ -4,7 +4,7 @@ import 'swiper/swiper.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import SwiperCore, { Navigation } from 'swiper';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import SL from '../../images/SL.svg';
 import KT from '../../images/KT.svg';
@@ -37,10 +37,10 @@ const SlideItem = styled.div`
 
 
 const MainSwiper = () => {
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const handleClick = (name) => {
-        navigate({
+        history.push({
             pathname:
                 "/list/" + name
         });
@@ -114,7 +114,7 @@ const MainSwiper = () => {
                 mousewheel={true}
             >
                 {data.map((dt) => (
-                    <SwiperSlide>
+                    <SwiperSlide key={dt.id}>
                         <SlideItem key={dt.id}>
                             <img src={dt.img_src} onClick={()=>handleClick(dt.teamname)} height="200" width="200"/>
                         </SlideItem>
