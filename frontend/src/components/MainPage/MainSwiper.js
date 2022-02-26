@@ -39,10 +39,10 @@ const SlideItem = styled.div`
 const MainSwiper = () => {
     const history = useHistory();
 
-    const handleClick = (name) => {
+    const handleClick = (name, img) => {
         history.push({
-            pathname:
-                "/list/" + name
+            pathname: "/list/" + name,
+            state: {img_src: img}
         });
     };
 
@@ -116,7 +116,7 @@ const MainSwiper = () => {
                 {data.map((dt) => (
                     <SwiperSlide key={dt.id}>
                         <SlideItem key={dt.id}>
-                            <img src={dt.img_src} onClick={()=>handleClick(dt.teamname)} height="200" width="200"/>
+                            <img src={dt.img_src} onClick={()=>handleClick(dt.teamname, dt.img_src)} height="200" width="200"/>
                         </SlideItem>
                     </SwiperSlide>
                 ))}

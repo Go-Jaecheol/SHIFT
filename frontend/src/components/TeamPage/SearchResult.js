@@ -33,7 +33,6 @@ const SearchResultInfo = styled.div`
 `;
 
 const TeamLogo = styled.div`
-    background-color: #FFFFFF;
     height: 80px;
     width: 80px;
     margin-left: 50px;
@@ -73,12 +72,14 @@ const MoreBtn = styled.button`
     }
 `;
 
-const SearchResult = () => {
+const SearchResult = (props) => {
     return (
         <SearchResultWrapper>
             <SearchResultContent>
                 <SearchResultInfo>
-                    <TeamLogo/>
+                    <TeamLogo>
+                    <img src={props.img_src} height="80px" width="80px"/>
+                    </TeamLogo>
                     <SeatInfo>
                         <StadiumName>삼성라이온즈파크</StadiumName>
                         <SeatName>블루존 3-2구역 5열 21</SeatName>

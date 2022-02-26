@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
+import { useLocation } from "react-router";
 
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
@@ -19,11 +20,13 @@ const TeamPageContent = styled.div`
 `;
 
 const TeamPage = () => {
+    const location = useLocation();
+
     return (
         <TeamPageWrap>
             <TeamPageContent>
                 <SearchBar/>
-                <SearchResult/>
+                <SearchResult img_src={location.state.img_src}/>
             </TeamPageContent>
         </TeamPageWrap>
     );

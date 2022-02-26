@@ -9,8 +9,9 @@ import TeamPage from "./components/TeamPage/TeamPage";
 function App() {
   return (
     <div className="App">
-        <Header/>
+        
         <BrowserRouter>
+          <Header/>
           <Switch>
             <Route
               exact
