@@ -5,6 +5,7 @@ import Header from "./components/Layout/Header";
 import Footer from "./components/Layout/Footer";
 import MainPage from "./components/MainPage/MainPage";
 import TeamPage from "./components/TeamPage/TeamPage";
+import SeatInfo from "./components/SeatInfo/SeatInfo";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
               exact
               path="/list/:team"
               component={(props) => <TeamPage {...props} />}
+            />
+            <Route
+              exact
+              path="/list/:team/:section/:col/:num"
+              component={(props) => <SeatInfo {...props} />}
             />
           </Switch>
         </BrowserRouter>
