@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useHistory } from 'react-router';
 
 const SearchBarWrapper = styled.div`
     height: 10%;
@@ -36,7 +37,34 @@ const SearchBtn = styled.button`
     }
 `;
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+    const history = useHistory();
+    const initialState = {
+        seatSection: "",
+        seatCol: 0,
+        seatNum: 0,
+    };
+    const [searchState, setSearchState] = useState(initialState);
+
+    const handleClick = () => {
+        history.push({
+            pathname: "/list/" + props.teamname + "/" + searchState.seatSection + "/" + searchState.seatCol + "/" + searchState.seatNum,
+            state: {
+                section: searchState.seatSection,
+                col: searchState.seatCol,
+                num: searchState.seatNum,
+            }
+        });
+    };
+
+    const handleChange = (event) => {
+        const target = event.target;
+        setSearchState({
+            ...searchState,
+            [target.name]: target.value,
+        });
+    };
+
     return (
         <SearchBarWrapper>
             <SearchBarContent>
@@ -45,11 +73,11 @@ const SearchBar = () => {
                     id="seat-section"
                     options={sectionList}
                     sx={{ width: 200 }}
-                    renderInput={(params) => <TextField {...params} label="구역" />}
+                    renderInput={(params) => <TextField {...params} name="seatSection" label="구역" onChange={handleChange}/>}
                 />
-                <TextField id="seat-col" label="열" variant="outlined" />
-                <TextField id="seat-num" label="번호" variant="outlined" />
-                <SearchBtn>Search</SearchBtn>
+                <TextField name="seatCol" label="열" variant="outlined" onChange={handleChange}/>
+                <TextField name="seatNum" label="번호" variant="outlined" onChange={handleChange}/>
+                <SearchBtn onClick={handleClick}>Search</SearchBtn>
             </SearchBarContent>
         </SearchBarWrapper>
     );

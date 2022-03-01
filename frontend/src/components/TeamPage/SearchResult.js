@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import Rating from '@mui/material/Rating';
 
@@ -73,6 +73,8 @@ const MoreBtn = styled.button`
 `;
 
 const SearchResult = (props) => {
+    const [stadiumName, setStadiumName] = useState("");
+    const [seatName, setSeatName] = useState()
     return (
         <SearchResultWrapper>
             <SearchResultContent>

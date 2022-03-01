@@ -27,6 +27,11 @@ function App() {
             <Route
               exact
               path="/list/:team/:section/:col/:num"
+              component={(props) => <TeamPage {...props} />}
+            />
+            <Route
+              exact
+              path="/seatinfo/:team/:section/:col/:num"
               component={(props) => <SeatInfo {...props} />}
             />
           </Switch>

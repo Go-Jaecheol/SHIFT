@@ -25,7 +25,7 @@ const TeamPage = () => {
     return (
         <TeamPageWrap>
             <TeamPageContent>
-                <SearchBar/>
+                <SearchBar teamname={location.state.teamname}/>
                 <SearchResult img_src={location.state.img_src}/>
             </TeamPageContent>
         </TeamPageWrap>

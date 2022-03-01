@@ -42,7 +42,10 @@ const MainSwiper = () => {
     const handleClick = (name, img) => {
         history.push({
             pathname: "/list/" + name,
-            state: {img_src: img}
+            state: {
+                teamname: name,
+                img_src: img,
+            }
         });
     };
 
