@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { Snackbar, Alert } from "@mui/material";
 import { useHistory } from 'react-router';
 
 const SearchBarWrapper = styled.div`
@@ -45,16 +46,25 @@ const SearchBar = (props) => {
         seatNum: 0,
     };
     const [searchState, setSearchState] = useState(initialState);
+    const [isCorrectName, setIsCorrectName] = useState(false);
+    const [snack, setSnack] = useState(false);
 
-    const handleClick = () => {
-        history.push({
-            pathname: "/list/" + props.teamname + "/" + searchState.seatSection + "/" + searchState.seatCol + "/" + searchState.seatNum,
-            state: {
-                section: searchState.seatSection,
-                col: searchState.seatCol,
-                num: searchState.seatNum,
-            }
-        });
+    const handleSubmit = () => {
+        if (!isCorrectName) {
+            setSnack(true);
+        }
+        if (searchState.seatSection !== "" && isCorrectName) {
+            history.push({
+                pathname: "/list/" + props.teamname + "/" + searchState.seatSection + "/" + searchState.seatCol + "/" + searchState.seatNum,
+                state: {
+                    section: searchState.seatSection,
+                    col: searchState.seatCol,
+                    num: searchState.seatNum,
+                    teamname: props.teamname,
+                    img_src: props.img_src,
+                }
+            });
+        }
     };
 
     const handleChange = (event) => {
@@ -65,6 +75,22 @@ const SearchBar = (props) => {
         });
     };
 
+    const ClickHandler = (text) => {
+        if (text !== undefined) {
+            setSearchState({
+                ...searchState,
+                seatSection: text,
+            });
+            setIsCorrectName(true);
+        }
+        else
+            setSnack(true);
+    };
+
+    const snackClose = () => {
+        setSnack(false);
+    };
+
     return (
         <SearchBarWrapper>
             <SearchBarContent>
@@ -73,18 +99,26 @@ const SearchBar = (props) => {
                     id="seat-section"
                     options={sectionList}
                     sx={{ width: 200 }}
+                    onChange={(event, value) =>
+                        value ? ClickHandler(value.label) : ClickHandler("")
+                    }
                     renderInput={(params) => <TextField {...params} name="seatSection" label="구역" onChange={handleChange}/>}
                 />
                 <TextField name="seatCol" label="열" variant="outlined" onChange={handleChange}/>
                 <TextField name="seatNum" label="번호" variant="outlined" onChange={handleChange}/>
-                <SearchBtn onClick={handleClick}>Search</SearchBtn>
+                <SearchBtn onClick={handleSubmit}>Search</SearchBtn>
+                <Snackbar open={snack} autoHideDuration={6000} onClose={snackClose}>
+                    <Alert onClose={snackClose} severity="error" variant="filled">
+                    원하는 구역을 선택해주세요!
+                    </Alert>
+                </Snackbar>
             </SearchBarContent>
         </SearchBarWrapper>
     );
 }
 
 const sectionList = [
-    { label: '블루존 3-2' },
+    { label: '블루존3-2' },
 ]
 
 export default SearchBar;

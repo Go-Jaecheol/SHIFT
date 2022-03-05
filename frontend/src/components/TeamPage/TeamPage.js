@@ -2,8 +2,8 @@ import React from "react";
 import styled from 'styled-components';
 import { useLocation } from "react-router";
 
-import SearchBar from "./SearchBar";
-import SearchResult from "./SearchResult";
+import SelectLevel from "./SelectLevel";
+import ShiftBanner from '../../images/SHIFT_banner.png';
 
 const TeamPageWrap = styled.div`
     display: flex;
@@ -19,14 +19,25 @@ const TeamPageContent = styled.div`
     width: 1100px;
 `;
 
+const BannerWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+`;
+
+const Banner = styled.img`
+    width: 1100px;
+    height: 540px;
+`;
+
 const TeamPage = () => {
     const location = useLocation();
 
     return (
         <TeamPageWrap>
             <TeamPageContent>
-                <SearchBar teamname={location.state.teamname}/>
-                <SearchResult img_src={location.state.img_src}/>
+                <Banner src={ShiftBanner}/>
+                <SelectLevel teamname={location.state.teamname} img_src={location.state.img_src}></SelectLevel>
             </TeamPageContent>
         </TeamPageWrap>
     );

@@ -6,6 +6,7 @@ import Footer from "./components/Layout/Footer";
 import MainPage from "./components/MainPage/MainPage";
 import TeamPage from "./components/TeamPage/TeamPage";
 import SeatInfo from "./components/SeatInfo/SeatInfo";
+import SearchPage from "./components/SearchPage/SearchPage";
 
 function App() {
   return (
@@ -26,8 +27,13 @@ function App() {
             />
             <Route
               exact
-              path="/list/:team/:section/:col/:num"
-              component={(props) => <TeamPage {...props} />}
+              path="/list/:team/:level"
+              component={(props) => <SearchPage {...props} />}
+            />
+            <Route
+              exact
+              path="/list/:team/:level/:section/:col/:num"
+              component={(props) => <SearchPage {...props} />}
             />
             <Route
               exact
