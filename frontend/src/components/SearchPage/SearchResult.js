@@ -74,21 +74,26 @@ const MoreBtn = styled.button`
 
 const SearchResult = (props) => {
     const [stadiumName, setStadiumName] = useState("");
-    const [seatName, setSeatName] = useState()
+    const [seatName, setSeatName] = useState();
+
     return (
         <SearchResultWrapper>
             <SearchResultContent>
-                <SearchResultInfo>
-                    <TeamLogo>
-                    <img src={props.img_src} height="80px" width="80px"/>
-                    </TeamLogo>
-                    <SeatInfo>
-                        <StadiumName>삼성라이온즈파크</StadiumName>
-                        <SeatName>블루존 3-2구역 5열 21</SeatName>
-                    </SeatInfo>
-                    <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
-                    <MoreBtn>More</MoreBtn>
-                </SearchResultInfo>
+                { props.search === "" ? (
+                    <p>원하는 좌석의 구역/열/번호를 선택해주세요!</p>
+                ) : (
+                    <SearchResultInfo>
+                        <TeamLogo>
+                        <img src={props.img_src} height="80px" width="80px"/>
+                        </TeamLogo>
+                        <SeatInfo>
+                            <StadiumName>삼성라이온즈파크</StadiumName>
+                            <SeatName>블루존 3-2구역 5열 21</SeatName>
+                        </SeatInfo>
+                        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
+                        <MoreBtn>More</MoreBtn>
+                    </SearchResultInfo>
+                )}
             </SearchResultContent>
         </SearchResultWrapper>
     );

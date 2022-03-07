@@ -55,11 +55,13 @@ const SearchBar = (props) => {
         }
         if (searchState.seatSection !== "" && isCorrectName) {
             history.push({
-                pathname: "/list/" + props.teamname + "/" + searchState.seatSection + "/" + searchState.seatCol + "/" + searchState.seatNum,
+                pathname: "/list/" + props.teamname + "/" + props.level,
+                search: "?section=" + searchState.seatSection + "&col=" + searchState.seatCol + "&num=" + searchState.seatNum,
                 state: {
                     section: searchState.seatSection,
                     col: searchState.seatCol,
                     num: searchState.seatNum,
+                    level: props.level,
                     teamname: props.teamname,
                     img_src: props.img_src,
                 }
@@ -118,7 +120,10 @@ const SearchBar = (props) => {
 }
 
 const sectionList = [
-    { label: '블루존3-2' },
+    { label: '3-2' },
+    { label: '3-3' },
+    { label: '3-4' },
+    { label: '3-5' },
 ]
 
 export default SearchBar;

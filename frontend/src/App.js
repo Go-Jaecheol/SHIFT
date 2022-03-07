@@ -32,11 +32,6 @@ function App() {
             />
             <Route
               exact
-              path="/list/:team/:level/:section/:col/:num"
-              component={(props) => <SearchPage {...props} />}
-            />
-            <Route
-              exact
               path="/seatinfo/:team/:section/:col/:num"
               component={(props) => <SeatInfo {...props} />}
             />

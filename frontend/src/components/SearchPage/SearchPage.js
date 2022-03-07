@@ -25,8 +25,8 @@ const SearchPage = () => {
     return (
         <SearchPageWrap>
             <SearchPageContent>
-                <SearchBar teamname={location.state.teamname} img_src={location.state.img_src}/>
-                <SearchResult img_src={location.state.img_src}/>
+                <SearchBar teamname={location.state.teamname} img_src={location.state.img_src} level={location.state.level}/>
+                <SearchResult search={location.search} img_src={location.state.img_src}/>
             </SearchPageContent>
         </SearchPageWrap>
     );
