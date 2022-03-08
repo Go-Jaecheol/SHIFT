@@ -6,17 +6,15 @@ import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 
 const SearchPageWrap = styled.div`
-    display: flex;
-    justify-content: center;
-    height: 80%;
     width: 100%;
 `;
 
 const SearchPageContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    position: relative;
+    gap: 1.25rem;
     width: 1100px;
+    margin: 0 auto;
 `;
 
 const SearchPage = () => {

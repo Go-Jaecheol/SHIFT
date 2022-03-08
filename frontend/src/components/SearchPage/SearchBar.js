@@ -6,12 +6,11 @@ import { Snackbar, Alert } from "@mui/material";
 import { useHistory } from 'react-router';
 
 const SearchBarWrapper = styled.div`
-    height: 10%;
-    width: 1100px;
-    border-radius: 5px;
-    background-color: rgba(230,230,230,0.5);
     display: flex;
-    justify-content: center;
+    grid-template-areas:
+        "department etype"
+        "search search";
+    gap: 1.25rem;
 `;
 
 const SearchBarContent = styled.div`
@@ -95,7 +94,6 @@ const SearchBar = (props) => {
 
     return (
         <SearchBarWrapper>
-            <SearchBarContent>
                 <Autocomplete
                     disablePortal
                     id="seat-section"
@@ -114,7 +112,6 @@ const SearchBar = (props) => {
                     원하는 구역을 선택해주세요!
                     </Alert>
                 </Snackbar>
-            </SearchBarContent>
         </SearchBarWrapper>
     );
 }
