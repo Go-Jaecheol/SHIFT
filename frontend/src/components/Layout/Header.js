@@ -15,7 +15,7 @@ const HeaderWrapper = styled.div`
 const HeaderContent = styled.div`
     display: flex;
     height: 100%;
-    width: 1100px;
+    width: 75em;
 `;
 
 const Logo = styled.img`

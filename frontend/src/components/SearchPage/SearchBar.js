@@ -1,40 +1,87 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { Snackbar, Alert } from "@mui/material";
 import { useHistory } from 'react-router';
+import { Select, MenuItem } from '@mui/material';
 
 const SearchBarWrapper = styled.div`
-    display: flex;
+    display: grid;
     grid-template-areas:
-        "department etype"
-        "search search";
-    gap: 1.25rem;
-`;
-
-const SearchBarContent = styled.div`
-    height: 70px;
-    width: 900px;
-    padding-top: 15px;
-    margin-top: 10px;
-    border-radius: 25px;
-    background-color: #FFFFFF;
-    display: flex;
-    justify-content: center;
-`;
-
-const SearchBtn = styled.button`
-    height: 56px;
-    width: 56px;
-    margin-left: 5px;
-    border-radius: 5px;
-    background-color: #5090d3;
-    border: 0;
-    cursor: pointer;
-    &:hover {
-        border: 2px solid white;
+        "section"
+        "col"
+        "num";
+    gap: 1rem;
+    @media (min-width: 48em){
+        grid-template-areas:
+            "section section"
+            "col num";
+        gap: 1.25rem;
     }
+    @media (min-width: 62em){
+        display: flex;
+    }
+`;
+
+const SearchSection = styled(Select)`
+    grid-area: section;
+    align-items: center;
+    height: 3.5rem;
+    min-width: 20rem;
+    padding-left: 0.5rem;
+    fieldset {
+        border: 1px solid #dcdee3;
+        border-radius: 0.5rem;
+        color: #4D5159;
+    }
+    @media (min-width: 62em){
+        width: auto;
+        margin-left: 1rem;
+    }
+`;
+
+const SearchCol = styled.div`
+    grid-area: col;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    min-width: 18.25rem;
+    @media (min-width: 62em){
+        width: auto;
+        margin-left: auto;
+    }
+`;
+
+const InputCol = styled.input`
+    flex: 1;
+    align-items: center;
+    height: 3.25rem;
+    border: 1px solid #dcdee3;
+    border-radius: 0.5rem;
+    padding-left: 1.25rem;
+    font-size: 1rem;
+    color: #4D5159;
+`;
+
+const SearchNum = styled.div`
+    grid-area: num;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    min-width: 18.25rem;
+    @media (min-width: 62em){
+        width: auto;
+        margin-right: auto;
+    }
+`;
+
+const InputNum = styled.input`
+    flex: 1;
+    align-items: center;
+    height: 3.25rem;
+    border: 1px solid #dcdee3;
+    border-radius: 0.5rem;
+    padding-left: 1.25rem;
+    font-size: 1rem;
+    color: #4D5159;
 `;
 
 const SearchBar = (props) => {
@@ -45,14 +92,9 @@ const SearchBar = (props) => {
         seatNum: 0,
     };
     const [searchState, setSearchState] = useState(initialState);
-    const [isCorrectName, setIsCorrectName] = useState(false);
-    const [snack, setSnack] = useState(false);
 
     const handleSubmit = () => {
-        if (!isCorrectName) {
-            setSnack(true);
-        }
-        if (searchState.seatSection !== "" && isCorrectName) {
+        if (searchState.seatSection !== "") {
             history.push({
                 pathname: "/list/" + props.teamname + "/" + props.level,
                 search: "?section=" + searchState.seatSection + "&col=" + searchState.seatCol + "&num=" + searchState.seatNum,
@@ -76,42 +118,26 @@ const SearchBar = (props) => {
         });
     };
 
-    const ClickHandler = (text) => {
-        if (text !== undefined) {
-            setSearchState({
-                ...searchState,
-                seatSection: text,
-            });
-            setIsCorrectName(true);
-        }
-        else
-            setSnack(true);
-    };
-
-    const snackClose = () => {
-        setSnack(false);
-    };
-
     return (
         <SearchBarWrapper>
-                <Autocomplete
-                    disablePortal
-                    id="seat-section"
-                    options={sectionList}
-                    sx={{ width: 200 }}
-                    onChange={(event, value) =>
-                        value ? ClickHandler(value.label) : ClickHandler("")
-                    }
-                    renderInput={(params) => <TextField {...params} name="seatSection" label="구역" onChange={handleChange}/>}
-                />
-                <TextField name="seatCol" label="열" variant="outlined" onChange={handleChange}/>
-                <TextField name="seatNum" label="번호" variant="outlined" onChange={handleChange}/>
-                <SearchBtn onClick={handleSubmit}>Search</SearchBtn>
-                <Snackbar open={snack} autoHideDuration={6000} onClose={snackClose}>
-                    <Alert onClose={snackClose} severity="error" variant="filled">
-                    원하는 구역을 선택해주세요!
-                    </Alert>
-                </Snackbar>
+            <SearchSection
+                name="seatSection"
+                value={searchState.seatSection}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Without label' }}
+                onChange={handleChange}
+            >
+                <MenuItem value="">전체 구역</MenuItem>
+                {sectionList.map((data) => (
+                    <MenuItem value={data.label}>{data.label}</MenuItem>
+                ))}
+            </SearchSection>
+            <SearchCol>
+                <InputCol name="seatCol" placeholder="열 검색" onChange={handleChange}></InputCol>
+            </SearchCol>
+            <SearchNum>
+                <InputNum name="seatNum" placeholder="번호 검색" onChange={handleChange}></InputNum>
+            </SearchNum>
         </SearchBarWrapper>
     );
 }
