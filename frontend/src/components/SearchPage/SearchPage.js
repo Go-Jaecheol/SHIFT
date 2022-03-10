@@ -33,8 +33,8 @@ const SearchPage = () => {
         <SearchPageWrap>
             <SearchPageContent>
                 <SearchPageText>원하는 좌석을 선택해주세요!</SearchPageText>
-                <SearchBar teamname={location.state.teamname} img_src={location.state.img_src} level={location.state.level}/>
-                <SearchResult search={location.search} img_src={location.state.img_src}/>
+                <SearchBar/>
+                <SearchResult/>
             </SearchPageContent>
         </SearchPageWrap>
     );

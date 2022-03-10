@@ -157,11 +157,12 @@ const SelectLevel = () => {
     
     const handleClick = (level) => {
         history.push({
-            pathname: "/list/" + location.state.teamname + "/" + level,
+            pathname: "/list/" + location.state.teamname + "/" + level.name,
             state: {
                 teamname: location.state.teamname,
                 img_src: location.state.img_src,
-                level: level,
+                level_name: level.name,
+                level_color: level.tag_color,
             }
         });
     };
@@ -182,7 +183,7 @@ const SelectLevel = () => {
                 <LevelListWrapper>
                     <LevelList>
                     {levelList.map((dt) => (
-                        <LevelContent tagColor={dt.tag_color} onClick={()=>handleClick(dt.name)}>
+                        <LevelContent tagColor={dt.tag_color} onClick={()=>handleClick(dt)}>
                             <LevelTag tagColor={dt.tag_color}>{dt.tag}</LevelTag>
                             <LevelName>
                                 {dt.name}

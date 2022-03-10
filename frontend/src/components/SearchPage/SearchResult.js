@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
+import { useLocation } from 'react-router';
 import Rating from '@mui/material/Rating';
 
 const SearchResultWrapper = styled.div`
@@ -71,35 +72,54 @@ const SearchResultTagName = styled.span`
     font-size: 0.875rem;
     font-weight: bold;
     color: white;
-    background: #0A86B7;
+    background-color: ${(props) => props.tagColor};
     line-height: 1.5rem;
     border-radius: 0.375rem;
     padding: 0.3125rem 0.6rem;
 `;
 
 const SearchResult = (props) => {
-    const [stadiumName, setStadiumName] = useState("");
-    const [seatName, setSeatName] = useState();
-
+    const location = useLocation();
+    
     return (
         <SearchResultWrapper>
             <SearchResultList>
-                <SearchResultContent>
-                    <SearchResultLink href="/">
-                        <SearchResultGrid>
-                            <SearchResultTag>
-                                <SearchResultTagName>블루존</SearchResultTagName>
-                            </SearchResultTag>
-                            <SeatName>3-2구역 5열 21</SeatName>
-                            <SeatRating>
-                                <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
-                            </SeatRating>
-                        </SearchResultGrid>
-                    </SearchResultLink>
-                </SearchResultContent>
+                {levelList.map((dt) => (
+                    <SearchResultContent>
+                        <SearchResultLink href="/">
+                            <SearchResultGrid>
+                                <SearchResultTag>
+                                    <SearchResultTagName tagColor={location.state.level_color}>{location.state.level_name}</SearchResultTagName>
+                                </SearchResultTag>
+                                <SeatName>{dt.label}</SeatName>
+                                <SeatRating>
+                                    <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
+                                </SeatRating>
+                            </SearchResultGrid>
+                        </SearchResultLink>
+                    </SearchResultContent>
+                ))}
             </SearchResultList>
         </SearchResultWrapper>
     );
 }
+
+const levelList = [
+    { 
+        label: '3-2구역 5열 21'
+    },
+    { 
+        label: '3-2구역 7열 2'
+    },
+    { 
+        label: '3-3구역 5열 11'
+    },
+    { 
+        label: '3-4구역 8열 2'
+    },
+    { 
+        label: '3-3구역 5열 6'
+    },
+]
 
 export default SearchResult;
