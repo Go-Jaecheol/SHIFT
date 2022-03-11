@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import Rating from '@mui/material/Rating';
@@ -84,21 +84,36 @@ const SearchResult = (props) => {
     return (
         <SearchResultWrapper>
             <SearchResultList>
-                {levelList.map((dt) => (
-                    <SearchResultContent>
-                        <SearchResultLink href="/">
-                            <SearchResultGrid>
-                                <SearchResultTag>
-                                    <SearchResultTagName tagColor={location.state.level_color}>{location.state.level_name}</SearchResultTagName>
-                                </SearchResultTag>
-                                <SeatName>{dt.label}</SeatName>
-                                <SeatRating>
-                                    <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
-                                </SeatRating>
-                            </SearchResultGrid>
-                        </SearchResultLink>
-                    </SearchResultContent>
-                ))}
+                {   location.state.section === "*" ?
+                    levelList.map(data => 
+                        <SearchResultContent>
+                            <SearchResultLink href="/">
+                                <SearchResultGrid>
+                                    <SearchResultTag>
+                                        <SearchResultTagName tagColor={location.state.level_color}>{location.state.level_name}</SearchResultTagName>
+                                    </SearchResultTag>
+                                    <SeatName>{data.label}</SeatName>
+                                    <SeatRating>
+                                        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
+                                    </SeatRating>
+                                </SearchResultGrid>
+                            </SearchResultLink>
+                        </SearchResultContent>
+                    ) : levelList.filter(data => data.section === location.state.section).map(data => (
+                        <SearchResultContent>
+                            <SearchResultLink href="/">
+                                <SearchResultGrid>
+                                    <SearchResultTag>
+                                        <SearchResultTagName tagColor={location.state.level_color}>{location.state.level_name}</SearchResultTagName>
+                                    </SearchResultTag>
+                                    <SeatName>{data.label}</SeatName>
+                                    <SeatRating>
+                                        <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
+                                    </SeatRating>
+                                </SearchResultGrid>
+                            </SearchResultLink>
+                        </SearchResultContent>
+                    ))}
             </SearchResultList>
         </SearchResultWrapper>
     );
@@ -106,19 +121,39 @@ const SearchResult = (props) => {
 
 const levelList = [
     { 
-        label: '3-2구역 5열 21'
+        id: 1,
+        label: '3-2구역 5열 21',
+        section: '3-2',
+        col: 5,
+        num: 21,
     },
     { 
-        label: '3-2구역 7열 2'
+        id: 2,
+        label: '3-2구역 7열 2',
+        section: '3-2',
+        col: 7,
+        num: 2,
     },
     { 
-        label: '3-3구역 5열 11'
+        id: 3,
+        label: '3-3구역 5열 11',
+        section: '3-3',
+        col: 5,
+        num: 11,
     },
     { 
-        label: '3-4구역 8열 2'
+        id: 4,
+        label: '3-4구역 8열 2',
+        section: '3-4',
+        col: 8,
+        num: 2,
     },
     { 
-        label: '3-3구역 5열 6'
+        id: 5,
+        label: '3-3구역 5열 6',
+        section: '3-3',
+        col: 5,
+        num: 6,
     },
 ]
 

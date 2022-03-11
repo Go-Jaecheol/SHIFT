@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { Select, MenuItem } from '@mui/material';
 
 const SearchBarWrapper = styled.div`
@@ -86,29 +86,14 @@ const InputNum = styled.input`
 
 const SearchBar = (props) => {
     const history = useHistory();
+    const location = useLocation();
+
     const initialState = {
-        seatSection: "",
+        seatSection: "*",
         seatCol: 0,
         seatNum: 0,
     };
     const [searchState, setSearchState] = useState(initialState);
-
-    const handleSubmit = () => {
-        if (searchState.seatSection !== "") {
-            history.push({
-                pathname: "/list/" + props.teamname + "/" + props.level,
-                search: "?section=" + searchState.seatSection + "&col=" + searchState.seatCol + "&num=" + searchState.seatNum,
-                state: {
-                    section: searchState.seatSection,
-                    col: searchState.seatCol,
-                    num: searchState.seatNum,
-                    level: props.level,
-                    teamname: props.teamname,
-                    img_src: props.img_src,
-                }
-            });
-        }
-    };
 
     const handleChange = (event) => {
         const target = event.target;
@@ -117,6 +102,20 @@ const SearchBar = (props) => {
             [target.name]: target.value,
         });
     };
+
+    useEffect(() => {
+        history.push({
+            pathname: "/list/" + location.state.teamname + "/" + location.state.level_name,
+            state: {
+                section: searchState.seatSection,
+                col: searchState.seatCol,
+                num: searchState.seatNum,
+                level_name: location.state.level_name,
+                level_color: location.state.level_color,
+                teamname: location.state.teamname,
+            }
+        });
+    }, [searchState]);
 
     return (
         <SearchBarWrapper>
@@ -127,7 +126,7 @@ const SearchBar = (props) => {
                 inputProps={{ 'aria-label': 'Without label' }}
                 onChange={handleChange}
             >
-                <MenuItem value="">전체 구역</MenuItem>
+                <MenuItem value="*">전체 구역</MenuItem>
                 {sectionList.map((data) => (
                     <MenuItem value={data.label}>{data.label}</MenuItem>
                 ))}
