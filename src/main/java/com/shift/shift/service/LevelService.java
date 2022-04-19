@@ -23,4 +23,10 @@ public class LevelService {
         Team team = teamRepository.findByTeamName(teamName);
         return levelRepository.findByTeamId(team.getTeamId());
     }
+
+    @Transactional
+    public List<Level> levelTagList(String teamName, String tag) {
+        Team team = teamRepository.findByTeamName(teamName);
+        return levelRepository.findByTeamIdAndTagName(team.getTeamId(), tag);
+    }
 }
