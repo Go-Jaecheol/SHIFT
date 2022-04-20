@@ -8,4 +8,5 @@ import java.util.List;
 public interface LevelRepository extends JpaRepository<Level, Long> {
     List<Level> findByTeamId(Long teamId);
     List<Level> findByTeamIdAndTagName(Long teamId, String tagName);
+    Level findByLevelName(String levelName);
 }
