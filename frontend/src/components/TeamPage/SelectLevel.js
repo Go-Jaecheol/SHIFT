@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { useLocation, useHistory } from 'react-router';
+import axios from 'axios';
 
 const SelectLevelWrapper = styled.div`
     position: relative;
@@ -154,17 +155,41 @@ const StadiumName = styled.p`
 const SelectLevel = () => {
     const history = useHistory();
     const location = useLocation();
+    const [levelList, setLevelList] = useState([]);
     
-    const handleClick = (level) => {
+    useEffect(() => {
+        axios({
+            url: "http://localhost:8080/api/list/" + location.state.teamname,
+            method: 'GET'
+        }).then((res) => {
+            setLevelList(res.data);
+        })
+        .catch((error)=>{console.log(error)});
+    }, [])
+
+    const handleClickLevel = (level) => {
         history.push({
-            pathname: "/list/" + location.state.teamname + "/" + level.name,
+            pathname: "/list/" + location.state.teamname + "/" + level.levelName,
             state: {
                 teamname: location.state.teamname,
                 img_src: location.state.img_src,
-                level_name: level.name,
-                level_color: level.tag_color,
+                level_name: level.levelName,
+                level_color: level.tagColor,
             }
         });
+    };
+
+    const handleClickTag = (tagName) => {
+        axios({
+            url: "http://localhost:8080/api/list/" + location.state.teamname,
+            method: 'POST',
+            data: {
+                tag: tagName
+            }
+        }).then((res) => {
+            setLevelList(res.data);
+        })
+        .catch((error)=>{console.log(error)});
     };
 
     return (
@@ -173,20 +198,20 @@ const SelectLevel = () => {
             <SelectLevelContent>
                 <SelectLevelCategory>
                     <CategoryList>
-                        <CategoryContent># Home</CategoryContent>
-                        <CategoryContent># Away</CategoryContent>
-                        <CategoryContent># Outfield</CategoryContent>
-                        <CategoryContent># Backstop</CategoryContent>
-                        <CategoryContent># Upstair</CategoryContent>
+                        <CategoryContent onClick={()=>handleClickTag("#Home")}># Home</CategoryContent>
+                        <CategoryContent onClick={()=>handleClickTag("#Away")}># Away</CategoryContent>
+                        <CategoryContent onClick={()=>handleClickTag("#Outfield")}># Outfield</CategoryContent>
+                        <CategoryContent onClick={()=>handleClickTag("#Backstop")}># Backstop</CategoryContent>
+                        <CategoryContent onClick={()=>handleClickTag("#Upstair")}># Upstair</CategoryContent>
                     </CategoryList>
                 </SelectLevelCategory>
                 <LevelListWrapper>
                     <LevelList>
-                    {levelList.map((dt) => (
-                        <LevelContent tagColor={dt.tag_color} onClick={()=>handleClick(dt)}>
-                            <LevelTag tagColor={dt.tag_color}>{dt.tag}</LevelTag>
+                    {levelList.map((level) => (
+                        <LevelContent tagColor={level.tagColor} onClick={()=>handleClickLevel(level)}>
+                            <LevelTag tagColor={level.tagColor}>{level.tagName}</LevelTag>
                             <LevelName>
-                                {dt.name}
+                                {level.levelName}
                                 <StadiumName>삼성라이온즈파크</StadiumName>
                             </LevelName>
                         </LevelContent>
@@ -197,103 +222,5 @@ const SelectLevel = () => {
         </SelectLevelWrapper>
     );
 }
-
-const levelList = [
-    { 
-        name: '블루존',
-        tag: '#Home',
-        tag_color: '#008EE9',
-    },
-    { 
-        name: 'VIP석',
-        tag: '#Backstop',
-        tag_color: '#f7cf7e',
-    },
-    { 
-        name: '중앙테이블석',
-        tag: '#Backstop',
-        tag_color: '#f7cf7e',
-    },
-    { 
-        name: '3루 테이블석',
-        tag: '#Home',
-        tag_color: '#008EE9',
-    },
-    { 
-        name: '1루 테이블석',
-        tag: '#Away',
-        tag_color: '#ee6f6d',
-    },
-    { 
-        name: '3루 익사이팅석',
-        tag: '#Home',
-        tag_color: '#008EE9',
-    },
-    { 
-        name: '1루 익사이팅석',
-        tag: '#Away',
-        tag_color: '#ee6f6d',
-    },
-    { 
-        name: '3루 내야지정석',
-        tag: '#Home',
-        tag_color: '#008EE9',
-    },
-    { 
-        name: '원정응원석',
-        tag: '#Away',
-        tag_color: '#ee6f6d',
-    },
-    { 
-        name: '1루 내야지정석',
-        tag: '#Home',
-        tag_color: '#008EE9',
-    },
-    { 
-        name: 'SKY(하단)지정석',
-        tag: '#Upstair',
-        tag_color: '#7a6ade',
-    },
-    { 
-        name: 'SKY(상단)지정석',
-        tag: '#Upstair',
-        tag_color: '#7a6ade',
-    },
-    { 
-        name: '외야지정석',
-        tag: '#Outfield',
-        tag_color: '#89898c',
-    },
-    { 
-        name: '잔디석',
-        tag: '#Upstair',
-        tag_color: '#7a6ade',
-    },
-    { 
-        name: '외야테이블석',
-        tag: '#Outfield',
-        tag_color: '#89898c',
-    },
-    { 
-        name: '외야패밀리석',
-        tag: '#Outfield',
-        tag_color: '#89898c',
-    },
-    { 
-        name: '외야미니테이블석',
-        tag: '#Outfield',
-        tag_color: '#89898c',
-    },
-    { 
-        name: '땅땅치킨루프탑',
-        tag: '#Outfield',
-        tag_color: '#89898c',
-    },
-    { 
-        name: '파티플로어석',
-        tag: '#Upstair',
-        tag_color: '#7a6ade',
-    },
-]
 
 export default SelectLevel;
