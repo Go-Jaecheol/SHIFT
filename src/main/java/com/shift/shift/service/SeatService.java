@@ -2,11 +2,13 @@ package com.shift.shift.service;
 
 import com.shift.shift.domain.Level;
 import com.shift.shift.domain.Seat;
+import com.shift.shift.domain.SeatFilterSpecification;
 import com.shift.shift.dto.SeatFilterRequest;
 import com.shift.shift.repository.LevelRepository;
 import com.shift.shift.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,29 +31,20 @@ public class SeatService {
     public List<Seat> seatFilterList(String levelName, SeatFilterRequest seatFilterRequest) {
         Level level = levelRepository.findByLevelName(levelName);
         String section = seatFilterRequest.getSection();
-        String col = seatFilterRequest.getRow();
+        String row = seatFilterRequest.getRow();
         String num = seatFilterRequest.getNum();
 
-        if(section.equals("All")) {
-            if(!col.equals("") && !num.equals("")) {
-                return seatRepository.findByLevelIdAndRowAndNum(level.getLevelId(), col, num);
-            } else if(!col.equals("")) {
-                return seatRepository.findByLevelIdAndRow(level.getLevelId(), col);
-            } else if(!num.equals("")) {
-                return seatRepository.findByLevelIdAndNum(level.getLevelId(), num);
-            } else {
-                return seatRepository.findByLevelId(level.getLevelId());
-            }
-        } else {
-            if(!col.equals("") && !num.equals("")) {
-                return seatRepository.findByLevelIdAndSectionAndRowAndNum(level.getLevelId(), section, col, num);
-            } else if(!col.equals("")) {
-                return seatRepository.findByLevelIdAndSectionAndRow(level.getLevelId(), section, col);
-            } else if(!num.equals("")) {
-                return seatRepository.findByLevelIdAndSectionAndNum(level.getLevelId(), section, num);
-            } else {
-                return seatRepository.findByLevelIdAndSection(level.getLevelId(), section);
-            }
+        Specification<Seat> spec = Specification.where(SeatFilterSpecification.equalLevelId(level.getLevelId()));
+        if(!section.equals("All") && !section.equals("")) {
+            spec = spec.and(SeatFilterSpecification.equalSection(section));
         }
+        if(!row.equals("")) {
+            spec = spec.and(SeatFilterSpecification.equalRow(row));
+        }
+        if(!num.equals("")) {
+            spec = spec.and(SeatFilterSpecification.equalNum(num));
+        }
+
+        return seatRepository.findAll(spec);
     }
 }
