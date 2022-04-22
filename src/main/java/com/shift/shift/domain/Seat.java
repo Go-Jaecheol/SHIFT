@@ -20,7 +20,7 @@ public class Seat {
 
     private String section;
 
-    private String col;
+    private String row;
 
     private String num;
 
@@ -31,10 +31,10 @@ public class Seat {
     private BigDecimal avgRating;
 
     @Builder
-    public Seat(Long seatId, String section, String col, String num, Long levelId, BigDecimal avgRating) {
+    public Seat(Long seatId, String section, String row, String num, Long levelId, BigDecimal avgRating) {
         this.seatId = seatId;
         this.section = section;
-        this.col = col;
+        this.row = row;
         this.num = num;
         this.levelId = levelId;
         this.avgRating = avgRating;

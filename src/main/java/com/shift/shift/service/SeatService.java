@@ -29,14 +29,14 @@ public class SeatService {
     public List<Seat> seatFilterList(String levelName, SeatFilterRequest seatFilterRequest) {
         Level level = levelRepository.findByLevelName(levelName);
         String section = seatFilterRequest.getSection();
-        String col = seatFilterRequest.getCol();
+        String col = seatFilterRequest.getRow();
         String num = seatFilterRequest.getNum();
 
         if(section.equals("All")) {
             if(!col.equals("") && !num.equals("")) {
-                return seatRepository.findByLevelIdAndColAndNum(level.getLevelId(), col, num);
+                return seatRepository.findByLevelIdAndRowAndNum(level.getLevelId(), col, num);
             } else if(!col.equals("")) {
-                return seatRepository.findByLevelIdAndCol(level.getLevelId(), col);
+                return seatRepository.findByLevelIdAndRow(level.getLevelId(), col);
             } else if(!num.equals("")) {
                 return seatRepository.findByLevelIdAndNum(level.getLevelId(), num);
             } else {
@@ -44,9 +44,9 @@ public class SeatService {
             }
         } else {
             if(!col.equals("") && !num.equals("")) {
-                return seatRepository.findByLevelIdAndSectionAndColAndNum(level.getLevelId(), section, col, num);
+                return seatRepository.findByLevelIdAndSectionAndRowAndNum(level.getLevelId(), section, col, num);
             } else if(!col.equals("")) {
-                return seatRepository.findByLevelIdAndSectionAndCol(level.getLevelId(), section, col);
+                return seatRepository.findByLevelIdAndSectionAndRow(level.getLevelId(), section, col);
             } else if(!num.equals("")) {
                 return seatRepository.findByLevelIdAndSectionAndNum(level.getLevelId(), section, num);
             } else {

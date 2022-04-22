@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class SeatFilterRequest {
     private String section;
-    private String col;
+    private String row;
     private String num;
 }
