@@ -2,7 +2,6 @@ import React from "react";
 import styled from 'styled-components';
 import { useLocation } from "react-router";
 
-import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
 
 const SearchPageWrap = styled.div`
@@ -33,7 +32,6 @@ const SearchPage = () => {
         <SearchPageWrap>
             <SearchPageContent>
                 <SearchPageText>원하는 좌석을 선택해주세요!</SearchPageText>
-                <SearchBar/>
                 <SearchResult/>
             </SearchPageContent>
         </SearchPageWrap>
