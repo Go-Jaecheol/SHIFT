@@ -1,41 +1,31 @@
 import React from "react";
 import styled from 'styled-components';
 
-import MainSwiper from "./MainSwiper";
-import ShiftBanner from '../../images/SHIFT_banner.png';
+import SelectTeam from "./SelectTeam";
+import ShiftBanner from '../../images/baseballpark.jpg';
 
 const MainPageWrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 80%;
+    box-sizing: border-box;
+    min-width: 1280px;
+    position: relative;
+    height: 100%;
 `;
 
 const BannerWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-`;
-
-const Banner = styled.img`
-    width: 1100px;
-    height: 540px;
-`;
-
-const MainContent = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    background: url(${ShiftBanner}) 50%;
+    background-size: cover;
+    position: relative;
+    box-sizing: border-box;
+    height: 600px;
+    padding-top: 132px;
 `;
 
 const MainPage = () => {
     return (
         <MainPageWrap>
             <BannerWrapper>
-                <Banner src={ShiftBanner}/>
             </BannerWrapper>
-            <MainContent>
-                <MainSwiper/>
-            </MainContent>
+            <SelectTeam/>
         </MainPageWrap>
     );
 }
