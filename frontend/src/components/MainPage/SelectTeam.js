@@ -98,32 +98,23 @@ const TeamLink = styled.a`
 `;
 
 const TeamTitle = styled.span`
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
     color: ${(props) => props.teamColor};
-    display: inline-block;
     display: -webkit-box;
     font-family: LineSeed,system-ui,-SF Pro Text,Helvetica,Roboto,sans-serif;
     font-size: 2.5rem;
     font-weight: 900;
     height: 70px;
-    letter-spacing: -.61px;
     line-height: 5.2rem;
     overflow: hidden;
     padding-bottom: 2px;
     position: relative;
-    -webkit-transition: color .3s;
     transition: color .3s;
     vertical-align: top;
-    word-break: break-all;
     word-break: break-word;
     z-index: 10;
 `;
 
 const StadiumName = styled.span`
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    display: inline-block;
     display: -webkit-box;
     font-family: LineSeed,system-ui,-SF Pro Text,Helvetica,Roboto,sans-serif;
     font-size: 1rem;
@@ -134,15 +125,13 @@ const StadiumName = styled.span`
     overflow: hidden;
     padding-bottom: 2px;
     position: relative;
-    -webkit-transition: color .3s;
     transition: color .3s;
     vertical-align: top;
-    word-break: break-all;
     word-break: break-word;
     z-index: 10;
 `;
 
-const TeamContentDown = styled.li`
+const TeamContent = styled.li`
     &:hover ${TeamTitle} {
         color: #ffffff;
     }
@@ -154,12 +143,6 @@ const TeamContentDown = styled.li`
         box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);
         z-index: 1;
         opacity: 1;
-    }
-    &:nth-last-child(2) {
-        animation: down 1s ease-in-out forwards;
-    }
-    &:nth-last-child(4) {
-        animation: down 1s ease-in-out forwards;
     }
     width: calc(20% - 12px);
     float: left;
@@ -168,26 +151,23 @@ const TeamContentDown = styled.li`
     margin-left: 7px;
     margin-right: 5px;
     opacity: 0.8;
-    top: 67px;
     transition: opacity 0.3s;
     transition: all 0.15s;
     border-radius: 14px;
     box-shadow: rgb(0 0 0 / 20%) 2px 2px 3px;
 `;
 
-const TeamContentUp = styled.li`
-    &:hover ${TeamTitle} {
-        color: #ffffff;
+const TeamContentDown = styled(TeamContent)`
+    &:nth-last-child(2) {
+        animation: down 1s ease-in-out forwards;
     }
-    &:hover ${StadiumName} {
-        color: #ffffff;
+    &:nth-last-child(4) {
+        animation: down 1s ease-in-out forwards;
     }
-    &:hover {
-        transform: scale(1.04);
-        box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);
-        z-index: 1;
-        opacity: 1;
-    }
+    top: 67px;
+`;
+
+const TeamContentUp = styled(TeamContent)`
     &:nth-last-child(1) {
         animation: up 1s ease-in-out forwards;
     }
@@ -197,18 +177,7 @@ const TeamContentUp = styled.li`
     &:nth-last-child(5) {
         animation: up 1s ease-in-out forwards;
     }
-    width: calc(20% - 12px);
-    float: left;
-    position: relative;
-    margin-top: 20px; 
-    margin-left: 7px;
-    margin-right: 5px;
-    opacity: 0.8;
     top: 0;
-    transition: opacity 0.3s;
-    transition: all 0.15s;
-    border-radius: 14px;
-    box-shadow: rgb(0 0 0 / 20%) 2px 2px 3px;
 `;
 
 const SelectTeam = () => {
