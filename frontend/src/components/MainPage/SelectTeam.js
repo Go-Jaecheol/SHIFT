@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import ShiftBanner from '../../images/baseballpark.jpg';
 
 const SelectTeamWrapper = styled.div`
-    background-color: #f7f8f9;
+    background-color: #fafafa;
     width: 1600px;
     height: 600px;
     position: relative;
