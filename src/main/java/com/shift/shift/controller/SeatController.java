@@ -20,12 +20,12 @@ public class SeatController {
     @GetMapping("/list/{team}/{level}")
     public List<Seat> seatListApi(@PathVariable("team") String team, @PathVariable("level") String level) {
         log.info(level + " 전체 좌석 목록 조회");
-        return seatService.seatList(level);
+        return seatService.seatList(team, level);
     }
 
     @PostMapping("/list/{team}/{level}")
     public List<Seat> seatFilterListApi(@PathVariable("team") String team, @PathVariable("level") String level, @RequestBody SeatFilterRequest seatFilterRequest) {
         log.info("필터링 된 좌석 목록 조회");
-        return seatService.seatFilterList(level, seatFilterRequest);
+        return seatService.seatFilterList(team, level, seatFilterRequest);
     }
 }

@@ -3,9 +3,11 @@ package com.shift.shift.service;
 import com.shift.shift.domain.Level;
 import com.shift.shift.domain.Seat;
 import com.shift.shift.domain.SeatFilterSpecification;
+import com.shift.shift.domain.Team;
 import com.shift.shift.dto.SeatFilterRequest;
 import com.shift.shift.repository.LevelRepository;
 import com.shift.shift.repository.SeatRepository;
+import com.shift.shift.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,16 +22,19 @@ import java.util.List;
 public class SeatService {
     private final SeatRepository seatRepository;
     private final LevelRepository levelRepository;
+    private final TeamRepository teamRepository;
 
     @Transactional
-    public List<Seat> seatList(String levelName) {
-        Level level = levelRepository.findByLevelName(levelName);
+    public List<Seat> seatList(String teamName, String levelName) {
+        Team team = teamRepository.findByTeamName(teamName);
+        Level level = levelRepository.findByTeamIdAndLevelName(team.getTeamId(), levelName);
         return seatRepository.findByLevelId(level.getLevelId());
     }
 
     @Transactional
-    public List<Seat> seatFilterList(String levelName, SeatFilterRequest seatFilterRequest) {
-        Level level = levelRepository.findByLevelName(levelName);
+    public List<Seat> seatFilterList(String teamName, String levelName, SeatFilterRequest seatFilterRequest) {
+        Team team = teamRepository.findByTeamName(teamName);
+        Level level = levelRepository.findByTeamIdAndLevelName(team.getTeamId(), levelName);
         String section = seatFilterRequest.getSection();
         String row = seatFilterRequest.getRow();
         String num = seatFilterRequest.getNum();
