@@ -21,7 +21,7 @@ public class SeatFilterSpecification {
         return new Specification<Seat>() {
             @Override
             public Predicate toPredicate(Root<Seat> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("section"), section);
+                return criteriaBuilder.equal(root.get("seatSection"), section);
             }
         };
     }
@@ -30,7 +30,7 @@ public class SeatFilterSpecification {
         return new Specification<Seat>() {
             @Override
             public Predicate toPredicate(Root<Seat> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("row"), row);
+                return criteriaBuilder.equal(root.get("seatRow"), row);
             }
         };
     }
@@ -39,7 +39,7 @@ public class SeatFilterSpecification {
         return new Specification<Seat>() {
             @Override
             public Predicate toPredicate(Root<Seat> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                return criteriaBuilder.equal(root.get("num"), num);
+                return criteriaBuilder.equal(root.get("seatNum"), num);
             }
         };
     }

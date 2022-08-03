@@ -1,14 +1,13 @@
 package com.shift.shift.controller;
 
 import com.shift.shift.domain.Seat;
-import com.shift.shift.dto.SeatFilterRequest;
+import com.shift.shift.dto.SeatRequest;
 import com.shift.shift.service.SeatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,8 +23,14 @@ public class SeatController {
     }
 
     @PostMapping("/list/{team}/{level}")
-    public List<Seat> seatFilterListApi(@PathVariable("team") String team, @PathVariable("level") String level, @RequestBody SeatFilterRequest seatFilterRequest) {
+    public List<Seat> seatFilterListApi(@PathVariable("team") String team, @PathVariable("level") String level, @RequestBody SeatRequest seatRequest) {
         log.info("필터링 된 좌석 목록 조회");
-        return seatService.seatFilterList(team, level, seatFilterRequest);
+        return seatService.seatFilterList(team, level, seatRequest);
+    }
+
+    @PutMapping("/list/{team}/{level}")
+    public void seatAddApi(@PathVariable("team") String team, @PathVariable("level") String level, @RequestBody SeatRequest seatRequest) {
+        log.info(seatRequest.getSection() + "구역 " + seatRequest.getRow() + "열 " + seatRequest.getNum() + " 좌석 정보 추가");
+        seatService.seatAdd(team, level, seatRequest);
     }
 }

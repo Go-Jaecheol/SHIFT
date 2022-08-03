@@ -187,7 +187,7 @@ const SearchResult = (props) => {
         }).then((res) => {
             const temp = new Set();
             res.data.map((data) => (
-                temp.add(data.section)
+                temp.add(data.seatSection)
             ));
             setSectionList(Array.from(temp));
         })
@@ -240,7 +240,7 @@ const SearchResult = (props) => {
                                     <SearchResultTag>
                                         <SearchResultTagName tagColor={location.state.level_color}>{location.state.level_name}</SearchResultTagName>
                                     </SearchResultTag>
-                                    <SeatName>{data.section + "구역 " + data.row + "열 " + data.num}</SeatName>
+                                    <SeatName>{data.seatSection + "구역 " + data.seatRow + "열 " + data.seatNum}</SeatName>
                                     <SeatRating>
                                         <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="large" />
                                     </SeatRating>

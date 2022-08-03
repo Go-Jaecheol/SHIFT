@@ -4,7 +4,7 @@ import com.shift.shift.domain.Level;
 import com.shift.shift.domain.Seat;
 import com.shift.shift.domain.SeatFilterSpecification;
 import com.shift.shift.domain.Team;
-import com.shift.shift.dto.SeatFilterRequest;
+import com.shift.shift.dto.SeatRequest;
 import com.shift.shift.repository.LevelRepository;
 import com.shift.shift.repository.SeatRepository;
 import com.shift.shift.repository.TeamRepository;
@@ -32,12 +32,12 @@ public class SeatService {
     }
 
     @Transactional
-    public List<Seat> seatFilterList(String teamName, String levelName, SeatFilterRequest seatFilterRequest) {
+    public List<Seat> seatFilterList(String teamName, String levelName, SeatRequest seatRequest) {
         Team team = teamRepository.findByTeamName(teamName);
         Level level = levelRepository.findByTeamIdAndLevelName(team.getTeamId(), levelName);
-        String section = seatFilterRequest.getSection();
-        String row = seatFilterRequest.getRow();
-        String num = seatFilterRequest.getNum();
+        String section = seatRequest.getSection();
+        String row = seatRequest.getRow();
+        String num = seatRequest.getNum();
 
         Specification<Seat> spec = Specification.where(SeatFilterSpecification.equalLevelId(level.getLevelId()));
         if(!section.equals("All") && !section.equals("")) {
@@ -51,5 +51,20 @@ public class SeatService {
         }
 
         return seatRepository.findAll(spec);
+    }
+
+    @Transactional
+    public void seatAdd(String teamName, String levelName, SeatRequest seatRequest) {
+        Team team = teamRepository.findByTeamName(teamName);
+        Level level = levelRepository.findByTeamIdAndLevelName(team.getTeamId(), levelName);
+
+        Seat seat = Seat.builder()
+                .seatSection(seatRequest.getSection())
+                .seatRow(seatRequest.getRow())
+                .seatNum(seatRequest.getNum())
+                .levelId(level.getLevelId())
+                .build();
+
+        seatRepository.save(seat);
     }
 }
